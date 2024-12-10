@@ -1,13 +1,29 @@
 import React from 'react';
-import { ResponseContainer, Message, Loading } from './Response.styles';
+import { ResponseContainer, Title, Message, Loading } from './Response.styles';
 
-const Response = ({ loading, error, response }) => (
-  <ResponseContainer>
-    <h2>Response:</h2>
-    {loading && <Loading>Loading...</Loading>}
-    {error && <Message isError>{error}</Message>}
-    {response && <Message>{response}</Message>}
-  </ResponseContainer>
-);
+const Response = ({ loading, error, response }) => {
+  if (loading) {
+    return (
+      <ResponseContainer>
+        <Loading>Loading...</Loading>
+      </ResponseContainer>
+    );
+  }
+
+  if (error) {
+    return (
+      <ResponseContainer>
+        <Message isError>{error}</Message>
+      </ResponseContainer>
+    );
+  }
+
+  return (
+    <ResponseContainer>
+      <Title>Response:</Title>
+      <Message>{response || 'No response available.'}</Message>
+    </ResponseContainer>
+  );
+};
 
 export default Response;
