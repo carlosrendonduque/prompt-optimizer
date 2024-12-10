@@ -10,26 +10,50 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Backend URL
     const backendUrl = "https://prompt-optimizer-backend.onrender.com/api/generate";
   
+    // Reset states before making a new request
+    setResponse('');
+    setError('');
+    setLoading(true);
+  
     try {
+      // Fetch response from the backend
       const res = await fetch(backendUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt, tone, length }),
+        body: JSON.stringify({
+          prompt,  // The text prompt entered by the user
+          tone,    // The selected tone (e.g., neutral, formal)
+          length,  // The selected length (e.g., short, medium)
+        }),
       });
   
       console.log("Raw response:", res);
   
       if (!res.ok) {
+        // Handle HTTP errors
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
   
       const data = await res.json();
-      setResponse(data.response || "No response received");
+      console.log("Parsed response:", data);
+  
+      // Update state with response or handle errors
+      if (data.response) {
+        setResponse(data.response);
+      } else {
+        setError(data.error || "Unexpected response from the backend");
+      }
     } catch (err) {
-      console.error("API call error:", err.message);
-      setError("API call failed: " + err.message);
+      // Handle fetch errors
+      console.error("API call error:", err);
+      setError("An error occurred while processing your request. Please try again.");
+    } finally {
+      // Stop loading indicator
+      setLoading(false);
     }
   };
   
