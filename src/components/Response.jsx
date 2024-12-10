@@ -1,11 +1,13 @@
-import React from 'react';
-import { ResponseContainer, Title, Message, Loading } from './Response.styles';
+import React, { useState } from 'react';
+import { ResponseContainer, Title, Message, CollapseButton } from './Response.styles';
 
 const Response = ({ loading, error, response }) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
   if (loading) {
     return (
       <ResponseContainer>
-        <Loading>Loading...</Loading>
+        <Message>Loading...</Message>
       </ResponseContainer>
     );
   }
@@ -20,8 +22,13 @@ const Response = ({ loading, error, response }) => {
 
   return (
     <ResponseContainer>
-      <Title>Response:</Title>
-      <Message>{response || 'No response available.'}</Message>
+      <Title>
+        Response:
+        <CollapseButton onClick={() => setIsCollapsed(!isCollapsed)}>
+          {isCollapsed ? 'Expand' : 'Collapse'}
+        </CollapseButton>
+      </Title>
+      {!isCollapsed && <Message>{response || 'No response available.'}</Message>}
     </ResponseContainer>
   );
 };

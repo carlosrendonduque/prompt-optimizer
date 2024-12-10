@@ -16,6 +16,9 @@ export const Title = styled.h2`
   font-size: 1.5rem;
   color: #333;
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const Message = styled.p`
@@ -24,8 +27,17 @@ export const Message = styled.p`
   line-height: 1.6;
 `;
 
-export const Loading = styled.p`
-  font-size: 1.2rem;
-  color: #007bff;
-  text-align: center;
+export const CollapseButton = styled.button`
+  font-size: 0.9rem;
+  padding: 0.3rem 0.6rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #0056b3;
+  }
 `;
