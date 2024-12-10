@@ -1,14 +1,27 @@
 import React from 'react';
 import { FormContainer, Textarea, SelectContainer, Label, Select, Button } from './Form.styles';
 
-const Form = ({ prompt, setPrompt, tone, setTone, length, setLength, handleSubmit, loading }) => (
-  <FormContainer onSubmit={handleSubmit}>
+const Form = ({
+  prompt,
+  setPrompt,
+  tone,
+  setTone,
+  length,
+  setLength,
+  handleGenerate,
+  handleEvaluate,
+  loading,
+}) => (
+  <FormContainer>
+    {/* Prompt Textarea */}
     <Textarea
       value={prompt}
       onChange={(e) => setPrompt(e.target.value)}
       placeholder="Enter your prompt here"
       rows="4"
     />
+
+    {/* Tone and Length Selectors */}
     <SelectContainer>
       <Label>
         Tone:
@@ -27,9 +40,16 @@ const Form = ({ prompt, setPrompt, tone, setTone, length, setLength, handleSubmi
         </Select>
       </Label>
     </SelectContainer>
-    <Button type="submit" disabled={loading}>
-      {loading ? 'Generating...' : 'Generate'}
-    </Button>
+
+    {/* Buttons for Generate and Evaluate */}
+    <div>
+      <Button type="button" onClick={handleGenerate} disabled={loading}>
+        {loading ? 'Generating...' : 'Generate'}
+      </Button>
+      <Button type="button" onClick={handleEvaluate} disabled={loading} style={{ marginLeft: '1rem' }}>
+        {loading ? 'Evaluating...' : 'Evaluate'}
+      </Button>
+    </div>
   </FormContainer>
 );
 
